@@ -1,5 +1,21 @@
 print("Hello, My name is BloxChat. How can I help you today? (Type help for a list of commands)")
 
+local external_api_error = [[
+ ________________________________________________________
+|                                                        |
+| :(                                                     |
+|                                                        |
+|  BloxChat encountered a problem while connecting to an |
+|  external API.                                         |
+|  If this error continues to appear please consider     |
+|   contacing the Bloxycraft support                     |
+|                                                        |
+|  Error code: EXT_API_ERR                               |
+|                                                        |
+|________________________________________________________|
+
+]]
+
 -- List of example greetings for Roblox cafe groups
 local roblox_groups_greetings = {
   "Welcome to our virtual cafe! Grab a drink and relax.",
@@ -158,6 +174,7 @@ random plane -- get a random plane
 random airline -- get a random airline (includes memes)
 fortune -- you are lucky!
 example greeting for Roblox groups -- get a random greeting for a Roblox group.
+where is the ISS -- get the current location of the International Space Station (via other APIs)
 ]]
 
 while true do
@@ -165,8 +182,73 @@ while true do
  
   if user_input == "hi" or user_input == "hello" then
     print("Hello there! How can I assist you?")
-    elseif user_input == "roblox vinns hotels greeting" then
-    print("Here is an example of a greeting that you can use in the Vinns hotels and Resorts Roblox group: Hello there! Welcome to Vinns Hotels and Resorts, my name is (your name here). How may I help you?")
+    elseif user_input == "where is the ISS" then
+    
+   -- Where is the International Space Station right now?
+
+local URL_ISS = "http://api.open-notify.org/iss-now.json"
+
+
+local function printISS()
+
+	local response
+
+	local data
+
+	-- Use pcall in case something goes wrong
+
+	pcall(function()
+
+		response= (URL_ISS)
+
+		data = (response)
+
+	end)
+
+	-- Did our request fail or our JSON fail to parse?
+
+	if not data then
+
+		return false
+
+	end
+
+
+	-- Fully check our data for validity. This is dependent on what endpoint you're
+
+	-- to which you're sending your requests. For this example, this endpoint is
+
+	-- described here:  http://open-notify.org/Open-Notify-API/ISS-Location-Now/
+
+	if data.message == "success" and data.iss_position then
+
+		if data.iss_position.latitude and data.iss_position.longitude then
+
+			print("The International Space Station is currently at:")
+
+			print(data.iss_position.latitude .. ", " .. data.iss_position.longitude)
+
+			return true
+
+		end
+
+	end
+
+	return false
+
+end
+
+
+if printISS() then
+
+	print("Success")
+
+else
+
+	print(external_api_error)
+      break
+
+end
     elseif user_input == "nothing" then
     print(lyrics)
   elseif user_input == "date" then
