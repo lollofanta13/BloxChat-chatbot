@@ -50,8 +50,8 @@ local airlines = {
   "Alaska",
   "Hawaiian",
   "Frontier",
-  "Spirit (💀)",
-  "Ryanair (hope you will get a butter landing lol :D)",
+  "Spirit ",
+  "Ryanair",
   "JetBlue"
 }
 
